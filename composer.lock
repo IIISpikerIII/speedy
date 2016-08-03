@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "5efb41113af738018f313710ff645968",
+    "content-hash": "38ee2039eccbb82901a8cd79b7f3c2ad",
+    "packages": [
+        {
+            "name": "ghunti/highcharts-php",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghunti/HighchartsPHP.git",
+                "reference": "548b321478510ec1559432a9baabbfba1a1e559a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghunti/HighchartsPHP/zipball/548b321478510ec1559432a9baabbfba1a1e559a",
+                "reference": "548b321478510ec1559432a9baabbfba1a1e559a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ghunti\\HighchartsPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Gonçalo Queirós",
+                    "email": "mail@goncaloqueiros.net",
+                    "homepage": "http://goncaloqueiros.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A php wrapper for highcharts and highstock javascript libraries",
+            "homepage": "http://goncaloqueiros.net/highcharts.php",
+            "keywords": [
+                "charts",
+                "highcharts",
+                "highstock",
+                "javascript",
+                "php"
+            ],
+            "time": "2016-01-24 11:57:43"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
