@@ -2,7 +2,8 @@
     "name": "root/speedy",
     "description": "testing speed for any platform",
     "require": {
-        "ghunti/highcharts-php": "^3.0"
+        "ghunti/highcharts-php": "^3.0",
+        "twig/twig": "^1.24"
     },
     "authors": [
         {

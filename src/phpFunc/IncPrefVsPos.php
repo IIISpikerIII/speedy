@@ -34,8 +34,10 @@ class IncPrefVsPos {
             }
         }
 //        $this->getGraph();
-        $this->getData();
+        $data = $this->getData();
         $this->clearData();
+
+        print App::render('test_result.php', ['data' => $data]);
     }
 
     public function getGraph()
@@ -100,7 +102,7 @@ class IncPrefVsPos {
         $db = App::db();
         $result = $db->query('select * from data');
         $result->setFetchMode(\PDO::FETCH_ASSOC);
-        print_r($result->fetchAll());
+        return $result->fetchAll();
     }
 
     public function clearData()

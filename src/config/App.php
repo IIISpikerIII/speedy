@@ -34,4 +34,11 @@ class App {
             die("failed to open/create the database");
         }
     }
+
+    public static function render($view, $params = [])
+    {
+        $loader = new \Twig_Loader_Filesystem(BASE_PATH.'/views');
+        $twig = new \Twig_Environment($loader);
+        return $twig->render($view, $params);
+    }
 }
