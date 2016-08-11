@@ -10,35 +10,15 @@ namespace speedy\phpFunc;
 use speedy\config\App;
 use Ghunti\HighchartsPHP\Highchart;
 use Ghunti\HighchartsPHP\HighchartJsExpr;
+use speedy\interfaces\TestAbstract;
+use speedy\interfaces\TestInterface;
 
-class IncPrefVsPos {
+class IncPrefVsPos extends TestAbstract implements TestInterface {
 
     public $valueTest = [/*10, 100, 1000, 10000, 100000, 500000,*/ 100, 1000, 2000, 3000, 5000];
     public $qntTest = 5;
     public $data = [];
-
-    public function getTime(){
-        return microtime(true);
-    }
-
-    public function run()
-    {
-        ini_set('memory_limit', 512000000);
-        $this->clearData();
-        foreach($this->valueTest as $size) {
-            print('SIZE: '.$size.'<br/>');
-            $qnt = 1;
-            while($qnt <= $this->qntTest){
-                $this->itemTest($size);
-                $qnt++;
-            }
-        }
-//        $this->getGraph();
-        $data = $this->getData();
-        $this->clearData();
-
-        print App::render('test_result.php', ['data' => $data]);
-    }
+    public $testArray = ['Post', 'Pre'];
 
     public function getGraph()
     {
@@ -87,79 +67,54 @@ class IncPrefVsPos {
 
     }
 
-    public function setData($name, $size, $time, $comment = null)
-    {
-        $db = App::db();
-        $db->query("CREATE TABLE IF NOT EXISTS data (name, size, time, comment)");
-
-        $command = $db->prepare("INSERT INTO data(name, size, time, comment) VALUES (?, ?, ?, ?)");
-        $data = [$name, $size, $time, $comment];
-        $command->execute($data);
-    }
-
-    public function getData()
-    {
-        $db = App::db();
-        $result = $db->query('select * from data');
-        $result->setFetchMode(\PDO::FETCH_ASSOC);
-        return $result->fetchAll();
-    }
-
-    public function clearData()
-    {
-        $db = App::db();
-        $db->query("delete from data");
-    }
-
     public function itemTest($size)
     {
         //variable set for memory
         $time1 = $this->testPost($size);
         $time2 = $this->testPref($size);
+        $part = $this->generatePart();
 
-        print(memory_get_usage(). ' bytes <br/>');
         $time1 = $this->testPost($size);
-        print(memory_get_usage(). ' bytes <br/>');
         $time2 = $this->testPref($size);
-        print(($time1 < $time2?'*':'').'Post: '.$time1.'<br/>');
-        print(($time2 < $time1?'*':'').'Pref: '.$time2.'<br/>');
-        $this->setData('Post', $size, $time1, '->');
-        $this->setData('Pre', $size, $time2, '->');
+        $this->setData('Post', $size, $time1['time'], $part, $time1['memory'],'->');
+        $this->setData('Pre', $size, $time2['time'], $part, $time2['memory'], '->');
 
-        print(memory_get_usage(). ' bytes <br/>');
+        $part = $this->generatePart();
         $time2 = $this->testPref($size);
-        print(memory_get_usage(). ' bytes <br/>');
         $time1 = $this->testPost($size);
-        print(($time2 < $time1?'*':'').'Pref: '.$time2.'<br/>');
-        print(($time1 < $time2?'*':'').'Post: '.$time1.'<br/>');
-        $this->setData('Post', $size, $time1, '<-');
-        $this->setData('Pre', $size, $time2, '<-');
-        print('----------------------- <br/>');
+        $this->setData('Post', $size, $time1['time'], $part, $time1['memory'], '<-');
+        $this->setData('Pre', $size, $time2['time'], $part, $time2['memory'], '<-');
     }
 
     public function testPref($size)
     {
         $testCounter = 0;
-        $startTime = $this->getTime();
+        $memory = $this->getMemory();
+        $time = $this->getTime();
         for($i=0;$i<$size;$i++) {
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
         }
-        return ($this->getTime() - $startTime);
+        $time = $this->getTime($time);
+        $memory = $this->getMemory($memory);
+        return ['memory' => $memory, 'time' => $time];
     }
 
     public function testPost($size)
     {
         $testCounter = 0;
-        $startTime = $this->getTime();
+        $memory = $this->getMemory();
+        $time = $this->getTime();
         for($i=0;$i<$size;$i++) {
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
         }
-        return ($this->getTime() - $startTime);
+        $time = $this->getTime($time);
+        $memory = $this->getMemory($memory);
+        return ['memory' => $memory, 'time' => $time];
     }
 }
