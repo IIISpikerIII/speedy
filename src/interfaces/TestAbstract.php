@@ -15,8 +15,9 @@ abstract class TestAbstract
     private $part = 0;
     public $valueTest = [/*10, 100, 1000, 10000, 100000, 500000,*/ 100, 1000, 2000, 3000, 5000];
     public $qntTest = 5;
-    public $data = [];
-    public $testArray = [];
+
+    public function render(){}
+    public function itemTest($size){}
 
     public function run()
     {
@@ -29,12 +30,9 @@ abstract class TestAbstract
                 $qnt++;
             }
         }
-//        $this->getGraph();
-        $data = $this->getData();
-        $groupData = $this->getGroupData();
-        $this->clearData();
 
-        print App::render('test_result.php', ['data' => $data, 'groupData' => $groupData, 'testArray' => $this->testArray]);
+        $this->render();
+        $this->clearData();
     }
 
     public function setData($name, $size, $time, $part = null, $memory = null, $comment = null)
@@ -50,33 +48,16 @@ abstract class TestAbstract
     public function getData()
     {
         $db = App::db();
-        $result = $db->query('select * from data');
+        $result = $db->query('select * from data where test_name = "'.__CLASS__.'"');
         $result->setFetchMode(\PDO::FETCH_ASSOC);
         return $result->fetchAll();
-    }
-
-    public function getGroupData()
-    {
-        $tests = $this->getData();
-        $groupTest = [];
-
-        foreach($tests as $test) {
-            $size = $test['size'];
-            if(!isset($groupTest[$size])) {
-                $groupTest[$size][$test['part']] = [];
-            }
-
-            $groupTest[$size][$test['part']][$test['name']] = $test;
-        }
-
-        return $groupTest;
     }
 
     public function clearData()
     {
         $db = App::db();
-        $db->query("delete from data where test_name = '".__CLASS__."'");
-//        $command->execute([__CLASS__]);
+        $command = $db->prepare("delete from data where test_name = ?");
+        $command->execute([__CLASS__]);
     }
 
     public function getTime($time = false)
