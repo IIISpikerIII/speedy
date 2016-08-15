@@ -9,6 +9,7 @@ namespace speedy\phpFunc;
 
 use speedy\config\App;
 use speedy\dataViewers\GraphBuble;
+use speedy\dataViewers\TableAvg;
 use speedy\dataViewers\TableGroup;
 use speedy\dataViewers\TableList;
 use speedy\interfaces\TestAbstract;
@@ -21,28 +22,33 @@ class IncPrefVsPos extends TestAbstract implements TestInterface {
 
     public function render() {
         $data = $this->getData();
-        print TableList::model()->run($data);
-        print TableGroup::model()->run($data);
-        //print GraphBuble::model()->run($data);
+        $tableList = TableList::model()->run($data);
+        $tableGroup = TableGroup::model()->run($data);
+        $graphBuble  = GraphBuble::model()->run($data);
+        $tableAvg = TableAvg::model()->run($data);
 
-        print App::render('test_result.php', compact('data'));
+        $viewers = compact('tableList', 'tableGroup', 'tableAvg', 'graphBuble');
+        print App::render('test_result.php', compact('viewers'));
     }
 
     public function itemTest($size)
     {
-        //variable set for memory
-        $time1 = $this->testPost($size);
-        $time2 = $this->testPref($size);
         $part = $this->generatePart();
 
-        $time1 = $this->testPost($size);
-        $time2 = $this->testPref($size);
+        //variable set for memory
+        $time1 = $this->speedTest('testPost', $size);
+        $time2 = $this->speedTest('testPref', $size);
+        $this->setData(self::DUMMY_NAME, $size, $time1['time'], $part, $time1['memory'],'->', self::DUMMY_NAME);
+        $this->setData(self::DUMMY_NAME, $size, $time2['time'], $part, $time2['memory'], '->', self::DUMMY_NAME);
+
+        $time1 = $this->speedTest('testPost', $size);
+        $time2 = $this->speedTest('testPref', $size);
         $this->setData('Post', $size, $time1['time'], $part, $time1['memory'],'->');
         $this->setData('Pre', $size, $time2['time'], $part, $time2['memory'], '->');
 
         $part = $this->generatePart();
-        $time2 = $this->testPref($size);
-        $time1 = $this->testPost($size);
+        $time2 = $this->speedTest('testPref', $size);
+        $time1 = $this->speedTest('testPost', $size);
         $this->setData('Post', $size, $time1['time'], $part, $time1['memory'], '<-');
         $this->setData('Pre', $size, $time2['time'], $part, $time2['memory'], '<-');
     }
@@ -50,32 +56,22 @@ class IncPrefVsPos extends TestAbstract implements TestInterface {
     public function testPref($size)
     {
         $testCounter = 0;
-        $memory = $this->getMemory();
-        $time = $this->getTime();
         for($i=0;$i<$size;$i++) {
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
             ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter; ++$testCounter;
         }
-        $time = $this->getTime($time);
-        $memory = $this->getMemory($memory);
-        return ['memory' => $memory, 'time' => $time];
     }
 
     public function testPost($size)
     {
         $testCounter = 0;
-        $memory = $this->getMemory();
-        $time = $this->getTime();
         for($i=0;$i<$size;$i++) {
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
             $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++; $testCounter++;
         }
-        $time = $this->getTime($time);
-        $memory = $this->getMemory($memory);
-        return ['memory' => $memory, 'time' => $time];
     }
 }
