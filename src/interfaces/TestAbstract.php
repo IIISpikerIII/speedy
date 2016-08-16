@@ -12,6 +12,9 @@ use speedy\config\App;
 
 abstract class TestAbstract extends TestCore
 {
+    public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
+    public $strategy = [];
+
     public function run()
     {
         ini_set('memory_limit', 512000000);
@@ -29,15 +32,40 @@ abstract class TestAbstract extends TestCore
         $this->clearData();
     }
 
-    public function render() {
+    public function render()
+    {
+        $title = $this->name;
         $data = $this->getData();
-        $tableList = TableList::model()->run($data);
-        $tableGroup = TableGroup::model()->run($data);
-        $graphBuble  = GraphBuble::model()->run($data);
-        $tableAvg = TableAvg::model()->run($data);
+        $viewers = [];
+        foreach($this->viewers as $viewer){
+            $viewers[] = $this->renderViewer(new $viewer, $data);
+        }
 
-        $viewers = compact('tableList', 'tableGroup', 'tableAvg', 'graphBuble');
-        print App::render('test_result.php', compact('viewers'));
+        print App::render($this->view.'.php', compact('viewers', 'title'));
+    }
+
+    public function itemTest($size)
+    {
+        if(sizeof($this->strategy) == 0) {
+            return;
+        }
+
+        //variable set for memory
+        $part = $this->generatePart();
+        $comment = implode('-', $this->strategy[0]);
+        foreach($this->strategy[0] as $test){
+            $time1 = $this->speedTest($test, $size);
+            $this->setData(self::DUMMY_NAME, $size, $time1['time'], $part, $time1['memory'],$comment, self::DUMMY_NAME);
+        }
+
+        foreach($this->strategy as $strategy){
+            $part = $this->generatePart();
+            $comment = implode('-', $strategy);
+            foreach($strategy as $test){
+                $time1 = $this->speedTest($test, $size);
+                $this->setData($test, $size, $time1['time'], $part, $time1['memory'],$comment);
+            }
+        }
     }
 
     public function speedTest($method, $size)

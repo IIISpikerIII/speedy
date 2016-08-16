@@ -1,5 +1,5 @@
 {
-    "name": "root/speedy",
+    "name": "iiispikeriii/speedy",
     "description": "testing speed for any platform",
     "require": {
         "ghunti/highcharts-php": "^3.0",

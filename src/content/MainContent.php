@@ -9,6 +9,7 @@
 namespace speedy\content;
 
 class MainContent {
+
     public function run()
     {
         echo 'Test any platform';

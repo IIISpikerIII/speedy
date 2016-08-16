@@ -13,9 +13,19 @@ use speedy\config\App;
 abstract class TestCore
 {
     const DUMMY_NAME = 'dummy';
+    const VIEWER_TLIST = 'speedy\dataViewers\TableList';
+    const VIEWER_GBUBLE = 'speedy\dataViewers\GraphBuble';
+    const VIEWER_TAVG = 'speedy\dataViewers\TableAvg';
+    const VIEWER_TGROUP = 'speedy\dataViewers\TableGroup';
+
     private $part = 0;
-    public $valueTest = [/*10, 100, 1000, 10000, 100000, 500000,*/ 100, 1000, 2000, 3000, 5000];
+
+    public $valueTest = [100, 1000, 2000, 3000, 5000];
     public $qntTest = 5;
+    public $viewers = [];
+    public $strategy = [];
+    public $name = 'Speedy test';
+    public $view = 'test_result';
 
     public function render(){}
     public function itemTest($size){}
@@ -91,5 +101,10 @@ abstract class TestCore
         $time = $this->getTime($time);
         $memory = $this->getMemory($memory);
         return ['memory' => $memory, 'time' => $time];
+    }
+
+    public function renderViewer(ViewerAbstract $viewer, $data)
+    {
+        return $viewer->run($data);
     }
 }
