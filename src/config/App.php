@@ -6,7 +6,7 @@
  * Time: 21:48
  */
 
-namespace speedy\config;
+namespace speedyPack\config;
 
 class App {
 

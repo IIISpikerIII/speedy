@@ -5,10 +5,10 @@
  * Date: 10.08.16
  * Time: 20:04
  */
-namespace speedy\interfaces;
+namespace speedyPack\interfaces;
 
 
-use speedy\config\App;
+use speedyPack\config\App;
 
 abstract class TestAbstract extends TestCore
 {

@@ -1,9 +1,9 @@
 <?php
-namespace speedy\dataViewers;
+namespace speedyPack\dataViewers;
 
 use Ghunti\HighchartsPHP\Highchart;
-use speedy\config\App;
-use speedy\interfaces\ViewerAbstract;
+use speedyPack\config\App;
+use speedyPack\interfaces\ViewerAbstract;
 
 class GraphBuble extends ViewerAbstract
 {

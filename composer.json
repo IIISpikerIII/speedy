@@ -13,7 +13,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "speedy\\": "src/"
+            "speedyPack\\": "src/",
+            "speedy\\": ""
         }
     }
 }

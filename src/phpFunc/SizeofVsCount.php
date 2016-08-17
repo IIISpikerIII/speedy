@@ -5,9 +5,9 @@
  * Date: 01.08.16
  * Time: 21:41
  */
-namespace speedy\phpFunc;
+namespace speedyPack\phpFunc;
 
-use speedy\helpers\ArrayHelper;
+use speedyPack\helpers\ArrayHelper;
 
 class SizeofVsCount {
 

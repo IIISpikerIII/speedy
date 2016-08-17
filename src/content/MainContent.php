@@ -6,7 +6,7 @@
  * Time: 21:48
  */
 
-namespace speedy\content;
+namespace speedyPack\content;
 
 class MainContent {
 

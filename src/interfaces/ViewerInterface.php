@@ -1,5 +1,5 @@
 <?php
-namespace speedy\interfaces;
+namespace speedyPack\interfaces;
 
 interface ViewerInterface
 {

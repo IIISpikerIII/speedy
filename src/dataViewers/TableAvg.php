@@ -1,8 +1,8 @@
 <?php
-namespace speedy\dataViewers;
+namespace speedyPack\dataViewers;
 
-use speedy\config\App;
-use speedy\interfaces\ViewerAbstract;
+use speedyPack\config\App;
+use speedyPack\interfaces\ViewerAbstract;
 
 class TableAvg extends ViewerAbstract
 {

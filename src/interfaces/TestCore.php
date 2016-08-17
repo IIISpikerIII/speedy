@@ -5,18 +5,18 @@
  * Date: 10.08.16
  * Time: 20:04
  */
-namespace speedy\interfaces;
+namespace speedyPack\interfaces;
 
 
-use speedy\config\App;
+use speedyPack\config\App;
 
 abstract class TestCore
 {
     const DUMMY_NAME = 'dummy';
-    const VIEWER_TLIST = 'speedy\dataViewers\TableList';
-    const VIEWER_GBUBLE = 'speedy\dataViewers\GraphBuble';
-    const VIEWER_TAVG = 'speedy\dataViewers\TableAvg';
-    const VIEWER_TGROUP = 'speedy\dataViewers\TableGroup';
+    const VIEWER_TLIST = 'speedyPack\dataViewers\TableList';
+    const VIEWER_GBUBLE = 'speedyPack\dataViewers\GraphBuble';
+    const VIEWER_TAVG = 'speedyPack\dataViewers\TableAvg';
+    const VIEWER_TGROUP = 'speedyPack\dataViewers\TableGroup';
 
     private $part = 0;
 

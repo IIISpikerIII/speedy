@@ -5,7 +5,7 @@
  * Date: 01.08.16
  * Time: 22:57
  */
-namespace speedy\helpers;
+namespace speedyPack\helpers;
 
 class ArrayHelper {
 

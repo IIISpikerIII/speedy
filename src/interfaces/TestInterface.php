@@ -5,7 +5,7 @@
  * Date: 10.08.16
  * Time: 19:56
  */
-namespace speedy\interfaces;
+namespace speedyPack\interfaces;
 
 interface TestInterface
 {

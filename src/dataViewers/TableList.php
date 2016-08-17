@@ -5,10 +5,10 @@
  * Date: 10.08.16
  * Time: 20:04
  */
-namespace speedy\dataViewers;
+namespace speedyPack\dataViewers;
 
-use speedy\config\App;
-use speedy\interfaces\ViewerAbstract;
+use speedyPack\config\App;
+use speedyPack\interfaces\ViewerAbstract;
 
 class TableList extends ViewerAbstract
 {

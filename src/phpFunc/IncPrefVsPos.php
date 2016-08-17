@@ -5,11 +5,11 @@
  * Date: 01.08.16
  * Time: 21:41
  */
-namespace speedy\phpFunc;
+namespace speedyPack\phpFunc;
 
-use speedy\interfaces\TestAbstract;
-use speedy\interfaces\TestCore;
-use speedy\interfaces\TestInterface;
+use speedyPack\interfaces\TestAbstract;
+use speedyPack\interfaces\TestCore;
+use speedyPack\interfaces\TestInterface;
 
 class IncPrefVsPos extends TestAbstract implements TestInterface {
 
