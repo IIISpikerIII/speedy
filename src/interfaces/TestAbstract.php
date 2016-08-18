@@ -13,7 +13,7 @@ use speedyPack\config\App;
 abstract class TestAbstract extends TestCore
 {
     public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
-    public $strategy = [];
+    protected $strategy = [];
 
     public function run()
     {
@@ -28,8 +28,7 @@ abstract class TestAbstract extends TestCore
             }
         }
 
-        $this->render();
-        $this->clearData();
+        return $this->render();
     }
 
     public function render()
@@ -41,7 +40,8 @@ abstract class TestAbstract extends TestCore
             $viewers[] = $this->renderViewer(new $viewer, $data);
         }
 
-        print App::render($this->view.'.php', compact('viewers', 'title'));
+        $this->clearData();
+        return App::render($this->view.'.php', compact('viewers', 'title'));
     }
 
     public function itemTest($size)

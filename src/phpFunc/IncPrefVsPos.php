@@ -17,7 +17,7 @@ class IncPrefVsPos extends TestAbstract implements TestInterface {
     public $valueTest = [100, 1000, 2000, 3000];
     public $qntTest = 5;
     public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
-    public $strategy = [['testPost', 'testPref'], ['testPref', 'testPost']];
+    protected $strategy = [['testPost', 'testPref'], ['testPref', 'testPost']];
 
     public function testPref($size)
     {

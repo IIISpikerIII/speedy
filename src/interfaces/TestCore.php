@@ -19,11 +19,11 @@ abstract class TestCore
     const VIEWER_TGROUP = 'speedyPack\dataViewers\TableGroup';
 
     private $part = 0;
+    protected $strategy = [];
 
     public $valueTest = [100, 1000, 2000, 3000, 5000];
     public $qntTest = 5;
     public $viewers = [];
-    public $strategy = [];
     public $name = 'Speedy test';
     public $view = 'test_result';
 

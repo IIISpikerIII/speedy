@@ -1,18 +1,59 @@
 # Speed testing any functions
 
-## install
+## Install
 
 composer require iiispikeriii/speedy
 
-## use
+## Use
 
-Speedy::test(Speedy::PHP_INC_PREF_POST)
+```php
+print Speedy::test(Speedy::PHP_INC_PREF_POST);
+```
 
+OR
 
-$params = [
-    'name' => 'Speedy ++i vs i++',
-    'valueTest' => [100, 1000, 2000, 3000],
-    'qntTest' => 5,
-    'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE],
-];
-Speedy::test(Speedy::PHP_INC_PREF_POST, $params)
+```php
+$params = [ 
+    'name' => 'Speedy ++i vs i++',  
+    'valueTest' => [100, 1000, 2000, 3000], 
+    'qntTest' => 5, 
+    'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
+];  
+print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
+```
+
+## Viewers
+
+* `TestCore::VIEWER_TLIST` - table list result
+* `TestCore::VIEWER_TGROUP` - table group result
+* `TestCore::VIEWER_TAVG` - table average result
+* `TestCore::VIEWER_GBUBLE` - graph with buble result
+
+## Tests
+
+* `Speedy::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
+
+## Compare custom functions
+
+```php
+$myFunc1 =  function($size) 
+{
+    ... custom code ... 
+};  
+    
+$myFunc2 = function($size)  
+{
+    ... custom code ... 
+};  
+print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2]);  
+    
+OR  
+    
+$params = [ 
+    'name' => 'Compare functions',   
+    'valueTest' => [100, 1000, 2000, 3000], 
+    'qntTest' => 5, 
+    'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
+];  
+print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2], $params);
+```
