@@ -29,23 +29,7 @@ abstract class TestCore
 
     public function render(){}
     public function itemTest($size){}
-
-    public function run()
-    {
-        ini_set('memory_limit', 512000000);
-        $this->createDb();
-        $this->clearData();
-        foreach($this->valueTest as $size) {
-            $qnt = 1;
-            while($qnt <= $this->qntTest){
-                $this->itemTest($size);
-                $qnt++;
-            }
-        }
-
-        $this->render();
-        $this->clearData();
-    }
+    public function run($onlyData = false){}
 
     protected function createDb()
     {
@@ -53,7 +37,7 @@ abstract class TestCore
         $db->query("CREATE TABLE IF NOT EXISTS data (test_name, name, size, time, part, memory, comment)");
     }
 
-    public function setData($name, $size, $time, $part = null, $memory = null, $comment = null, $testName = __CLASS__)
+    protected function setData($name, $size, $time, $part = null, $memory = null, $comment = null, $testName = __CLASS__)
     {
         $db = App::db();
         $this->createDb();
@@ -63,7 +47,7 @@ abstract class TestCore
         $command->execute($data);
     }
 
-    public function getData()
+    protected function getData()
     {
         $db = App::db();
         $result = $db->query('select * from data where test_name = "'.__CLASS__.'"');
@@ -71,29 +55,29 @@ abstract class TestCore
         return $result->fetchAll();
     }
 
-    public function clearData()
+    protected function clearData()
     {
         $db = App::db();
         $command = $db->prepare("delete from data where test_name IN (?, ?)");
         $command->execute([__CLASS__, self::DUMMY_NAME]);
     }
 
-    public function getTime($time = false)
+    protected function getTime($time = false)
     {
         return $time === false? microtime(true) : microtime(true) - $time;
     }
 
-    public function getMemory($memory = false)
+    protected function getMemory($memory = false)
     {
         return $memory === false? memory_get_usage() : memory_get_usage() - $memory;
     }
 
-    public function generatePart()
+    protected function generatePart()
     {
         return ++$this->part;
     }
 
-    public function speedTest($method, $size)
+    protected function speedTest($method, $size)
     {
         $memory = $this->getMemory();
         $time = $this->getTime();
@@ -103,7 +87,7 @@ abstract class TestCore
         return ['memory' => $memory, 'time' => $time];
     }
 
-    public function renderViewer(ViewerAbstract $viewer, $data)
+    protected function renderViewer(ViewerAbstract $viewer, $data)
     {
         return $viewer->run($data);
     }

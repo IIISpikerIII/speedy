@@ -2,12 +2,20 @@
 
 ## Install
 
+```
 composer require iiispikeriii/speedy
+```
 
 ## Use
 
 ```php
 print Speedy::test(Speedy::PHP_INC_PREF_POST);
+```
+
+if you want to get only result speed testing - use onlyData param its true
+
+```php
+print Speedy::test(Speedy::PHP_INC_PREF_POST, [], true);
 ```
 
 OR
@@ -17,7 +25,7 @@ $params = [
     'name' => 'Speedy ++i vs i++',  
     'valueTest' => [100, 1000, 2000, 3000], 
     'qntTest' => 5, 
-    'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
+    'viewers' => [TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
 ];  
 print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
 ```
@@ -45,10 +53,15 @@ $myFunc2 = function($size)
 {
     ... custom code ... 
 };  
+```
+    
+```php
 print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2]);  
-    
-OR  
-    
+```
+
+OR
+
+```php
 $params = [ 
     'name' => 'Compare functions',   
     'valueTest' => [100, 1000, 2000, 3000], 

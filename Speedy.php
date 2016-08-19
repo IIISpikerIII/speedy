@@ -13,7 +13,7 @@ class Speedy {
 
     const PHP_INC_PREF_POST = 'speedyPack\phpFunc\IncPrefVsPos';
 
-    public static function test($test, $params = [])
+    public static function test($test, $params = [], $onlyData = false)
     {
         $test = new $test();
         foreach($params as $key => $value) {
@@ -22,10 +22,10 @@ class Speedy {
             }
         }
 
-        return $test->run();
+        return $test->run($onlyData);
     }
 
-    public static function compare($func = [], $params = [])
+    public static function compare($func = [], $params = [], $onlyData = false)
     {
         $test = new CompareTest($func);
 
@@ -35,6 +35,6 @@ class Speedy {
             }
         }
 
-        return $test->run();
+        return $test->run($onlyData);
     }
 } 

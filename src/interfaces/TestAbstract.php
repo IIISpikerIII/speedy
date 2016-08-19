@@ -15,9 +15,8 @@ abstract class TestAbstract extends TestCore
     public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
     protected $strategy = [];
 
-    public function run()
+    public function run($onlyData = false)
     {
-        ini_set('memory_limit', 512000000);
         $this->createDb();
         $this->clearData();
         foreach($this->valueTest as $size) {
@@ -28,7 +27,7 @@ abstract class TestAbstract extends TestCore
             }
         }
 
-        return $this->render();
+        return $onlyData? $this->getData() : $this->render();
     }
 
     public function render()
