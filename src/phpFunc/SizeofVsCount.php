@@ -8,40 +8,36 @@
 namespace speedyPack\phpFunc;
 
 use speedyPack\helpers\ArrayHelper;
+use speedyPack\interfaces\TestAbstract;
+use speedyPack\interfaces\TestCore;
+use speedyPack\interfaces\TestInterface;
 
-class SizeofVsCount {
+class SizeofVsCount extends TestAbstract implements TestInterface
+{
+    public $name = 'Speedy Sizeof vs Count';
+    public $valueTest = [10000, 100000, 500000, 1000000];
+    public $qntTest = 5;
+    public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
+    public $functions = ['count' => 'testCount', 'sizeof' => 'testSizeof'];
+    protected $strategy = [['testCount', 'testSizeof'], ['testSizeof', 'testCount']];
 
-    public function getTime(){
-        return microtime(true);
+    public function testCount($size)
+    {
+        $array = ArrayHelper::getRndArray($size,10);
+        for($i=0;$i<1000;$i++) {
+            count($array); count($array); count($array);
+            count($array); count($array); count($array);
+            count($array); count($array); count($array);
+        }
     }
 
-    public function run()
+    public function testSizeof($size)
     {
-        ini_set('memory_limit', 512000000);
-
-        $params = [/*10, 100, 1000, 10000, 100000, 500000, 800000,*/ 1000000];
-        foreach($params as $size){
-            print('SIZE: '.$size.'<br/>');
-            $array = ArrayHelper::getRndArray($size,10);
-
-            flush();
-            $start_time = $this->gettime();
-            sizeof($array);
-            $stop_time = $this->gettime();
-            $time = bcsub($stop_time,$start_time,6);
-            print("Sizeof: ".$time."<br/>");
-
-            flush();
-            $start_time = $this->gettime();
-            count($array);
-            $stop_time = $this->gettime();
-            $time = bcsub($stop_time,$start_time,6);
-            print("Count: ".$time."<br/>");
-
-
-            print("---------------------<br/>");
-            unset($array);
-            flush();
+        $array = ArrayHelper::getRndArray($size,10);
+        for($i=0;$i<1000;$i++) {
+            sizeof($array); sizeof($array); sizeof($array);
+            sizeof($array); sizeof($array); sizeof($array);
+            sizeof($array); sizeof($array); sizeof($array);
         }
     }
 }

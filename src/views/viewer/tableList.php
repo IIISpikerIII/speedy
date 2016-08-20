@@ -1,4 +1,4 @@
-<table>
+<table class="table table-bordered">
     <tr>
         <td>name</td>
         <td>time</td>

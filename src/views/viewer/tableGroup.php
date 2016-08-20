@@ -1,8 +1,8 @@
-<table>
+<table class="table table-bordered">
     <tr>
         <td rowspan="2">size</td>
         {% for name in names %}
-        <td colspan="2">{{ name }}</td>
+        <td colspan="3">{{ name }}</td>
         {% endfor %}
         <td rowspan="2">comment</td>
         <td rowspan="2">time win</td>
@@ -10,12 +10,13 @@
     <tr>
         {% for name in names %}
         <td>time</td>
+        <td>%</td>
         <td>memory</td>
         {% endfor %}
     </tr>
 
     {% for size, part in data %}
-        {% for test in part %}
+        {% for numPart, test in part %}
         <tr>
             <td>{{ size }}</td>
             {% set winnerTime = 0 %}
@@ -32,6 +33,14 @@
                     {% endif %}
                 {% endif %}
                 <td>{{ test[name].time }}</td>
+
+                {% set percentTime = (((stat[size][numPart]['maxTime'] - test[name].time)/(stat[size][numPart]['maxTime']))*100) |round(2) %}
+                {% if percentTime == 0 %}
+                    <td class="danger"></td>
+                {% else %}
+                    <td>{{ percentTime }}</td>
+                {% endif %}
+
                 <td>{{ test[name].memory }}</td>
             {% endfor %}
             <td>{{ commentRow }}</td>

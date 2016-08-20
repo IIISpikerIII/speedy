@@ -26,7 +26,7 @@ class ArrayHelper {
                 $item.= $symbol[$position];
             }
 
-            $resultArray[] = $item;
+            $resultArray[$pos.'_'.$pos] = $item;
         }
 
         return $resultArray;

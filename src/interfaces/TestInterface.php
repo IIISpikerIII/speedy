@@ -9,10 +9,6 @@ namespace speedyPack\interfaces;
 
 interface TestInterface
 {
-
     public function run();
     public function itemTest($size);
-    public function setData($name, $size, $time, $comment);
-    public function getData();
-    public function clearData();
 }
