@@ -3,6 +3,7 @@
     "description": "testing speed for any platform",
     "keywords": ["testing", "speed"],
     "version": "0.1.0",
+    "license": "MIT",
     "require": {
         "ghunti/highcharts-php": "^3.0",
         "twig/twig": "^1.24"
