@@ -9,9 +9,10 @@ namespace speedyPack\phpFunc;
 
 use speedyPack\interfaces\TestAbstract;
 use speedyPack\interfaces\TestCore;
+use speedyPack\interfaces\TestInterface;
 
-class IncPrefVsPos extends TestAbstract {
-
+class IncPrefVsPos extends TestAbstract
+{
     public $name = 'Speedy ++i vs i++';
     public $valueTest = [100, 1000, 2000, 3000];
     public $qntTest = 5;

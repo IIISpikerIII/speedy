@@ -70,3 +70,21 @@ $params = [
 ];  
 print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2], $params);
 ```
+## Example viwers
+
+VIEWER_TLIST
+
+!["table data list viewer"](https://github.com/IIISpikerIII/speedy/blob/master/docs/VIEWER_TLIST.png?raw=true)
+
+VIEWER_TGROUP
+
+!["table data group viewer"](https://github.com/IIISpikerIII/speedy/blob/master/docs/VIEWER_TGROUP.png?raw=true)
+
+VIEWER_TAVG
+
+!["table data group viewer"](https://github.com/IIISpikerIII/speedy/blob/master/docs/VIEWER_TAVG.png?raw=true)
+
+VIEWER_GBUBLE
+
+!["graph data buble viewer"](https://github.com/IIISpikerIII/speedy/blob/master/docs/chartTest.png?raw=true)
+

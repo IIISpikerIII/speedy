@@ -38,6 +38,7 @@ class GraphBuble extends ViewerAbstract
         $data = $this->generateData($data);
 
         $chart = new Highchart();
+        $chart->title = ['text' =>''];
         $chart->chart = [
             'renderTo' => 'container',
             'type' => 'scatter',
