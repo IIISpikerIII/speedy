@@ -10,7 +10,7 @@ namespace speedyPack\interfaces;
 
 use speedyPack\config\App;
 
-abstract class TestAbstract extends TestCore
+abstract class TestAbstract extends TestCore implements TestInterface
 {
     public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
     protected $strategy = [];
