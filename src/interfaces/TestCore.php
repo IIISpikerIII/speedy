@@ -18,12 +18,16 @@ abstract class TestCore
     const VIEWER_TAVG = 'speedyPack\dataViewers\TableAvg';
     const VIEWER_TGROUP = 'speedyPack\dataViewers\TableGroup';
 
+    const TESTER_PHP = 'speedyPack\testers\PhpTester';
+    const TESTER_XHPROF = 'speedyPack\testers\XHprofTester';
+
     private $part = 0;
     protected $strategy = [];
 
     public $valueTest = [100, 1000, 2000, 3000, 5000];
     public $qntTest = 5;
     public $viewers = [];
+    public $tester;
     public $name = 'Speedy test';
     public $view = 'test_result';
 
@@ -62,16 +66,6 @@ abstract class TestCore
         $command->execute([__CLASS__, self::DUMMY_NAME]);
     }
 
-    protected function getTime($time = false)
-    {
-        return $time === false? microtime(true) : microtime(true) - $time;
-    }
-
-    protected function getMemory($memory = false)
-    {
-        return $memory === false? memory_get_usage() : memory_get_usage() - $memory;
-    }
-
     protected function generatePart()
     {
         return ++$this->part;
@@ -79,12 +73,7 @@ abstract class TestCore
 
     protected function speedTest($method, $size)
     {
-        $memory = $this->getMemory();
-        $time = $this->getTime();
-        call_user_func_array([$this, $method], [$size]);
-        $time = $this->getTime($time);
-        $memory = $this->getMemory($memory);
-        return ['memory' => $memory, 'time' => $time];
+        return $this->tester->run($this, $method, $size);
     }
 
     protected function renderViewer(ViewerAbstract $viewer, $data)

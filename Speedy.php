@@ -7,6 +7,7 @@
  */
 namespace speedy;
 
+use speedyPack\interfaces\TestCore;
 use speedyPack\phpFunc\CompareTest;
 
 class Speedy {
@@ -17,7 +18,15 @@ class Speedy {
     public static function test($test, $params = [], $onlyData = false)
     {
         $test = new $test();
+
         foreach($params as $key => $value) {
+
+            if($key == 'tester') {
+                $tester = self::getTester($value);
+                $test->tester = $tester;
+                continue;
+            }
+
             if(isset($test->$key)) {
                 $test->$key = $value;
             }
@@ -31,6 +40,13 @@ class Speedy {
         $test = new CompareTest($func);
 
         foreach($params as $key => $value) {
+
+            if($key == 'tester') {
+                $tester = self::getTester($value);
+                $test->tester = $tester;
+                continue;
+            }
+
             if(isset($test->$key)) {
                 $test->$key = $value;
             }
@@ -38,4 +54,21 @@ class Speedy {
 
         return $test->run($onlyData);
     }
+
+    private static function getTester($testerParams)
+    {
+        if(!is_array($testerParams)) {
+            return new $testerParams;
+        }
+
+        $tester = new $testerParams['name'];
+
+        foreach($testerParams as $key => $value) {
+            if(isset($tester->$key)) {
+                $tester->$key = $value;
+            }
+        }
+        return $tester;
+    }
+
 } 

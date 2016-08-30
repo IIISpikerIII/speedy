@@ -86,14 +86,4 @@ abstract class TestAbstract extends TestCore implements TestInterface
 
         return implode('-', $comment);
     }
-
-    public function speedTest($method, $size)
-    {
-        $memory = $this->getMemory();
-        $time = $this->getTime();
-        call_user_func_array([$this, $method], [$size]);
-        $time = $this->getTime($time);
-        $memory = $this->getMemory($memory);
-        return ['memory' => $memory, 'time' => $time];
-    }
 }

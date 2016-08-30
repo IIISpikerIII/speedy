@@ -26,6 +26,7 @@ $params = [
     'valueTest' => [100, 1000, 2000, 3000], 
     'qntTest' => 5, 
     'viewers' => [TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
+    'tester' => ['name' => TestCore::TESTER_PHP], or 'tester' => TestCore::TESTER_PHP
 ];  
 print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
 ```
@@ -40,6 +41,14 @@ print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
 ## Tests
 
 * `Speedy::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
+
+## Testers
+
+* `TestCore::TESTER_PHP` - testing with PHP functions microtime and memory_get_usage
+* `TestCore::TESTER_XHPROF` - testing with extention XHProf, required XHProf. 
+    * xhprof_lib - path to xhprof_lib.php (not required)
+    * xhprof_runs - path to xhprof_runs.php (not required)
+    
 
 ## Compare custom functions
 
@@ -67,6 +76,7 @@ $params = [
     'valueTest' => [100, 1000, 2000, 3000], 
     'qntTest' => 5, 
     'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
+    'tester' => TestCore::TESTER_XHPROF,
 ];  
 print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2], $params);
 ```
