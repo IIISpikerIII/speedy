@@ -16,6 +16,8 @@ abstract class TestAbstract extends TestCore implements TestInterface
     protected $strategy = [];
     protected $functions = [];
 
+    public function initPart($size) {}
+
     public function run($onlyData = false)
     {
         ini_set("memory_limit","512M");
@@ -23,6 +25,7 @@ abstract class TestAbstract extends TestCore implements TestInterface
         $this->clearData();
         foreach($this->valueTest as $size) {
             $qnt = 1;
+            $this->initPart($size);
             while($qnt <= $this->qntTest){
                 $this->itemTest($size);
                 $qnt++;

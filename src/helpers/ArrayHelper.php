@@ -15,11 +15,12 @@ class ArrayHelper {
         $symbol = 'ABCDEFGHIJKLMNOPQRSTUVWXYZАzyxwvutsrqponmlkjihgfedcbaаБбВвГгДдЕеЁёЖжЗзИиЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЪъЫыЬьЭэЮюЯя123465790';
         $length = strlen($symbol);
         $pos = 0;
-        $posItem = 0;
 
         while($pos <= $size) {
+            $posItem = 0;
             $pos++;
             $item = '';
+
             while ($posItem <= $itemSize) {
                 $posItem++;
                 $position = rand(0, $length-1);
