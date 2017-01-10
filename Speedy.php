@@ -14,6 +14,7 @@ class Speedy {
 
     const PHP_INC_PREF_POST = 'speedyPack\phpFunc\IncPrefVsPos';
     const PHP_ARR_READ = 'speedyPack\phpFunc\ArrayRead';
+    const PHP_ARR_SORT = 'speedyPack\phpFunc\ArraySort';
     const PHP_SOF_VS_COUNT = 'speedyPack\phpFunc\SizeofVsCount';
 
     public static function test($test, $params = [], $onlyData = false)

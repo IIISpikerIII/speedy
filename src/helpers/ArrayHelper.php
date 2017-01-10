@@ -34,4 +34,17 @@ class ArrayHelper {
     }
 
 
+    public static function getRndArrayNum($size = 10, $itemMaxSize = 999999)
+    {
+        $resultArray = [];
+        $pos = 0;
+
+        while($pos <= $size) {
+            $pos++;
+            $item = rand(0, $itemMaxSize);
+            $resultArray[] = $item;
+        }
+
+        return $resultArray;
+    }
 }

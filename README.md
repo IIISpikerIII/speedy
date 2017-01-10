@@ -42,6 +42,7 @@ print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
 
 * `Speedy::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
 * `Speedy::PHP_ARR_READ` - comparison with reading array "while" "for" "foreach"
+* `Speedy::PHP_ARR_SORT` - comparison with sorting arrays Heap, Bubble, Select, Insertion, Quick
 
 ## Testers
 
