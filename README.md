@@ -41,6 +41,7 @@ print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
 ## Tests
 
 * `Speedy::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
+* `Speedy::PHP_ARR_READ` - comparison with reading array "while" "for" "foreach"
 
 ## Testers
 

@@ -20,24 +20,30 @@ class SizeofVsCount extends TestAbstract implements TestInterface
     public $viewers = [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE];
     public $functions = ['count' => 'testCount', 'sizeof' => 'testSizeof'];
     protected $strategy = [['testCount', 'testSizeof'], ['testSizeof', 'testCount']];
+    private $testArray = [];
+
+    public function initPart($size)
+    {
+        $this->testArray = ArrayHelper::getRndArray($size,10);
+    }
 
     public function testCount($size)
     {
-        $array = ArrayHelper::getRndArray($size,10);
-        for($i=0;$i<1000;$i++) {
-            count($array); count($array); count($array);
-            count($array); count($array); count($array);
-            count($array); count($array); count($array);
+        $array =  $this->testArray;
+        for($i=0;$i<10000;$i++) {
+            count($array); count($array); count($array); count($array); count($array);
+            count($array); count($array); count($array); count($array); count($array);
+            count($array); count($array); count($array); count($array); count($array);
         }
     }
 
     public function testSizeof($size)
     {
-        $array = ArrayHelper::getRndArray($size,10);
-        for($i=0;$i<1000;$i++) {
-            sizeof($array); sizeof($array); sizeof($array);
-            sizeof($array); sizeof($array); sizeof($array);
-            sizeof($array); sizeof($array); sizeof($array);
+        $array =  $this->testArray;
+        for($i=0;$i<10000;$i++) {
+            sizeof($array); sizeof($array); sizeof($array); sizeof($array); sizeof($array);
+            sizeof($array); sizeof($array); sizeof($array); sizeof($array); sizeof($array);
+            sizeof($array); sizeof($array); sizeof($array); sizeof($array); sizeof($array);
         }
     }
 }
