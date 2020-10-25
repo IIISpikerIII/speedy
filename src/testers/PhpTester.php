@@ -1,30 +1,49 @@
 <?php
-namespace speedyPack\testers;
 
-use speedyPack\interfaces\TestCore;
-use speedyPack\interfaces\TesterInterface;
+namespace speedy\testers;
+
+use speedy\DTO\TestResultDTO;
+use speedy\tests\interfaces\TestInterface;
 
 class PhpTester implements TesterInterface
 {
-    public function run(TestCore $object, $method, $size)
-    {
-        $memory = $this->getMemory();
-        $time = $this->getTime();
+	/**
+	 * @param TestInterface $object
+	 * @param string $method
+	 * @param int $size
+	 *
+	 * @return TestResultDTO
+	 */
+	public function run(TestInterface $object, string $method, int $size): TestResultDTO
+	{
+		$memory = $this->getMemory();
+		$time = $this->getTime();
 
-        call_user_func_array([$object, $method], [$size]);
+		$object->$method($size);
 
-        $time = $this->getTime($time);
-        $memory = $this->getMemory($memory);
-        return ['memory' => $memory, 'time' => $time];
-    }
+		$time = $this->getTime($time);
+		$memory = $this->getMemory($memory);
 
-    protected function getTime($time = false)
-    {
-        return $time === false? microtime(true) : microtime(true) - $time;
-    }
+		return new TestResultDTO($memory, $time);
+	}
 
-    protected function getMemory($memory = false)
-    {
-        return $memory === false? memory_get_usage() : memory_get_usage() - $memory;
-    }
+	/**
+	 * @param float|null $time
+	 *
+	 * @return float
+	 */
+	protected function getTime(float $time = null): float
+	{
+		return $time === null ? microtime(true) : microtime(true) - $time;
+	}
+
+	/**
+	 * @param int|null $memory
+	 *
+	 * @return int
+	 */
+	protected function getMemory(int $memory = null): int
+	{
+		return $memory === null ? memory_get_usage() : memory_get_usage() - $memory;
+	}
 }

@@ -6,39 +6,29 @@
  * Time: 21:48
  */
 
-namespace speedyPack\config;
+namespace speedy\config;
 
-class App {
+use DI\Container;
+use DI\ContainerBuilder;
 
-    protected static $config = null;
-    protected static $instance = null;
+class App
+{
+	protected static $container = null;
 
-    public static function conf($attr)
-    {
-        if (!isset(self::$config)) {
-            self::$config = include('config.php');
-        }
-        return isset(self::$config[$attr])? self::$config[$attr] : false;
-    }
+	/**
+	 * @return Container
+	 * @throws \Exception
+	 */
+	public static function makeContainer(): Container
+	{
+		if (self::$container === null) {
+			$containerBuilder = new ContainerBuilder();
+			$containerBuilder->addDefinitions(__DIR__ . '/config.php');
+			$containerBuilder->addDefinitions(__DIR__ . '/di.php');
+			$containerBuilder->useAutowiring(true);
+			self::$container = $containerBuilder->build();
+		}
 
-    public static function db()
-    {
-        try {
-            if (!isset(self::$instance)) {
-                $dbName = App::conf('db')['name'];
-                self::$instance = new \PDO('sqlite:'.$dbName) or die("failed to open/create the database ".$dbName);
-            }
-            return self::$instance;
-        }
-        catch(\PDOException $e) {
-            die("failed to open/create the database");
-        }
-    }
-
-    public static function render($view, $params = [])
-    {
-        $loader = new \Twig_Loader_Filesystem(BASE_PATH.'/views');
-        $twig = new \Twig_Environment($loader);
-        return $twig->render($view, $params);
-    }
+		return self::$container;
+	}
 }
