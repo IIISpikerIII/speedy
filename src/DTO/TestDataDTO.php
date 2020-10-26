@@ -4,19 +4,19 @@ namespace speedy\DTO;
 
 class TestDataDTO
 {
-	/** @var string  */
+	/** @var string */
 	protected $testName;
-	/** @var string  */
+	/** @var string */
 	protected $name;
-	/** @var int  */
+	/** @var int */
 	protected $size;
-	/** @var float  */
+	/** @var float */
 	protected $time;
-	/** @var int  */
+	/** @var int */
 	protected $part;
-	/** @var int  */
+	/** @var int */
 	protected $memory;
-	/** @var string  */
+	/** @var string */
 	protected $comment;
 
 	public function __construct(string $testName, string $name, int $size, float $time, int $part = null, int $memory = null, string $comment = null)

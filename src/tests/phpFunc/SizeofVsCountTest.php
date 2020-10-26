@@ -10,9 +10,8 @@ namespace speedy\tests\phpFunc;
 
 use speedy\helpers\ArrayHelper;
 use speedy\tests\interfaces\TestAbstract;
-use speedy\tests\interfaces\TestInterface;
 
-class SizeofVsCountTest extends TestAbstract implements TestInterface
+class SizeofVsCountTest extends TestAbstract
 {
 	public $name = 'Speedy Sizeof vs Count';
 	public $volumesTest = [10000, 100000, 500000, 1000000];

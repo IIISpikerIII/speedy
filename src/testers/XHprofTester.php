@@ -16,11 +16,16 @@ class XHprofTester implements TesterInterface
 	 * @param int $size
 	 *
 	 * @return TestResultDTO
+	 * @throws \Exception
 	 */
-	public function run(TestInterface $object, $method, $size): TestResultDTO
+	public function run(TestInterface $object, string $method, int$size): TestResultDTO
 	{
+		if (extension_loaded('xhprof') === false) {
+			throw new \Exception("Extension xhprof not loaded");
+		}
+
 		xhprof_enable(XHPROF_FLAGS_CPU | XHPROF_FLAGS_MEMORY);
-		call_user_func_array([$object, $method], [$size]);
+		$object->$method($size);
 		$xhprof_data = xhprof_disable();
 		$data = $xhprof_data['main()'];
 
@@ -28,7 +33,7 @@ class XHprofTester implements TesterInterface
 			include_once $this->xhprof_lib;
 			include_once $this->xhprof_runs;
 			$xhprof_runs = new \XHProfRuns_Default();
-			$run_id = $xhprof_runs->save_run($xhprof_data, $object->name);
+			$xhprof_runs->save_run($xhprof_data, $object->name);
 		}
 
 		return new TestResultDTO($data['mu'], $data['wt']);

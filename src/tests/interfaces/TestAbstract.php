@@ -17,13 +17,11 @@ use Twig\Error\SyntaxError;
 
 abstract class TestAbstract extends TestCore implements TestInterface
 {
-	/** @var ViewerInterface[]  */
+	/** @var ViewerInterface[] */
 	protected $viewers = [];
 	protected $functions = [];
 
-	public function preparePart(int $size)
-	{
-	}
+	public function preparePart(int $size) {}
 
 	/**
 	 * @param ViewerInterface $viewer
@@ -36,12 +34,15 @@ abstract class TestAbstract extends TestCore implements TestInterface
 	/**
 	 * @param ViewerInterface[] $viewers
 	 */
-	public function setViewers(array $viewers)
+	public function setViewers(array $viewers): void
 	{
 		$this->viewers = $viewers;
 	}
 
-	public function setRepeat(int $repeats)
+	/**
+	 * @param int $repeats
+	 */
+	public function setRepeat(int $repeats): void
 	{
 		$this->repeatTest = $repeats;
 	}
@@ -119,14 +120,24 @@ abstract class TestAbstract extends TestCore implements TestInterface
 		}
 	}
 
-	protected function generateNameTest($funcName)
+	/**
+	 * @param string $funcName
+	 *
+	 * @return string
+	 */
+	protected function generateNameTest(string $funcName): string
 	{
 		$name = array_search($funcName, $this->functions, true);
 
 		return $name !== false ? $name : $funcName;
 	}
 
-	protected function generateCommentTest(Array $strategy)
+	/**
+	 * @param array $strategy
+	 *
+	 * @return string
+	 */
+	protected function generateCommentTest(array $strategy): string
 	{
 		$comment = [];
 		foreach ($strategy as $func) {

@@ -19,6 +19,9 @@ class ArraySortTest extends TestAbstract
 	protected $strategy = [['testHeap', 'testBubble', 'testSelect', 'testInsertion', 'testQuick'], ['testQuick', 'testInsertion', 'testSelect', 'testBubble', 'testHeap'],];
 	private $testArray = [];
 
+	/**
+	 * @param int $size
+	 */
 	public function preparePart(int $size)
 	{
 		$this->testArray = ArrayHelper::getRndArrayNum($size);

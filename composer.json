@@ -11,6 +11,9 @@
         "php-di/php-di": "^6.3",
         "ext-pdo": "*"
     },
+    "suggest": {
+        "ext-xhprof": "Needed to support XHprof tester"
+    },
     "authors": [
         {
             "name": "Nikita Zorin",

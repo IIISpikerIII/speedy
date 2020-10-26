@@ -1,8 +1,6 @@
 <?php
 
-
 namespace speedy\lists;
-
 
 class ViewerList
 {

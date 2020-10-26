@@ -1,5 +1,7 @@
 # Speed testing any functions
 
+It`s util for easy performance testing some functions. 
+
 ## Install
 
 ```
@@ -9,13 +11,20 @@ composer require iiispikeriii/speedy
 ## Use
 
 ```php
-print Speedy::test(Speedy::PHP_INC_PREF_POST);
+$speedy = new Speedy();
+print $speedy->runTestByName(TestList::PHP_ARR_SORT);
+```
+
+OR
+
+```php
+print Speedy::test(TestList::PHP_INC_PREF_POST);
 ```
 
 if you want to get only result speed testing - use onlyData param its true
 
 ```php
-print Speedy::test(Speedy::PHP_INC_PREF_POST, [], true);
+print Speedy::test(TestList::PHP_INC_PREF_POST, [], true);
 ```
 
 OR
@@ -23,31 +32,32 @@ OR
 ```php
 $params = [ 
     'name' => 'Speedy ++i vs i++',  
-    'valueTest' => [100, 1000, 2000, 3000], 
-    'qntTest' => 5, 
-    'viewers' => [TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
-    'tester' => ['name' => TestCore::TESTER_PHP], or 'tester' => TestCore::TESTER_PHP
+    'volumesTest' => [100, 1000, 2000, 3000], 
+    'repeatTest' => 5, 
+    'viewers' => [ViewerList::VIEWER_TGROUP, ViewerList::VIEWER_TAVG, ViewerList::VIEWER_GBUBLE], 
+    'tester' => 'tester' => TesterList::TESTER_PHP
 ];  
-print Speedy::test(Speedy::PHP_INC_PREF_POST, $params);
+print Speedy::test(TestList::PHP_INC_PREF_POST, $params);
 ```
 
 ## Viewers
 
-* `TestCore::VIEWER_TLIST` - table list result
-* `TestCore::VIEWER_TGROUP` - table group result
-* `TestCore::VIEWER_TAVG` - table average result
-* `TestCore::VIEWER_GBUBLE` - graph with buble result
+* `ViewerList::VIEWER_TLIST` - table list result
+* `ViewerList::VIEWER_TGROUP` - table group result
+* `ViewerList::VIEWER_TAVG` - table average result
+* `ViewerList::VIEWER_GBUBLE` - graph with buble result
 
 ## Tests
 
-* `Speedy::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
-* `Speedy::PHP_ARR_READ` - comparison with reading array "while" "for" "foreach"
-* `Speedy::PHP_ARR_SORT` - comparison with sorting arrays Heap, Bubble, Select, Insertion, Quick
+* `TestList::PHP_INC_PREF_POST` - comparison with pre-increment postincrement (++i and i++)
+* `TestList::PHP_ARR_READ` - comparison with reading array "while" "for" "foreach"
+* `TestList::PHP_ARR_SORT` - comparison with sorting arrays Heap, Bubble, Select, Insertion, Quick
+* `TestList::PHP_SOF_VS_COUNT` - comparison with sizeof() versus count()
 
 ## Testers
 
-* `TestCore::TESTER_PHP` - testing with PHP functions microtime and memory_get_usage
-* `TestCore::TESTER_XHPROF` - testing with extention XHProf, required XHProf. 
+* `TesterList::TESTER_PHP` - testing with PHP functions microtime and memory_get_usage
+* `TesterList::TESTER_XHPROF` - testing with extention XHProf, required XHProf. 
     * xhprof_lib - path to xhprof_lib.php (not required)
     * xhprof_runs - path to xhprof_runs.php (not required)
     
@@ -65,7 +75,7 @@ $myFunc2 = function($size)
     ... custom code ... 
 };  
 ```
-    
+every custome functions should take int parameter - workload from volumesTest
 ```php
 print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2]);  
 ```
@@ -75,10 +85,10 @@ OR
 ```php
 $params = [ 
     'name' => 'Compare functions',   
-    'valueTest' => [100, 1000, 2000, 3000], 
-    'qntTest' => 5, 
-    'viewers' => [TestCore::VIEWER_TLIST, TestCore::VIEWER_TGROUP, TestCore::VIEWER_TAVG, TestCore::VIEWER_GBUBLE], 
-    'tester' => TestCore::TESTER_XHPROF,
+    'volumesTest' => [100, 1000, 2000, 3000], 
+    'repeatTest' => 5, 
+    'viewers' => [ViewerList::VIEWER_TLIST, ViewerList::VIEWER_TGROUP, ViewerList::VIEWER_TAVG, ViewerList::VIEWER_GBUBLE], 
+    'tester' => TesterList::TESTER_XHPROF,
 ];  
 print Speedy::compare(['nameFunc1' => $myFunc1, 'nameFunc2' => $myFunc2], $params);
 ```

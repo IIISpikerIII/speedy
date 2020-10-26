@@ -19,6 +19,11 @@ class ArrayReadTest extends TestAbstract
 	protected $strategy = [['testFor', 'testWhile', 'testForeach'], ['testWhile', 'testFor', 'testForeach'], ['testForeach', 'testFor', 'testWhile'],];
 	private $testArray = [];
 
+	/**
+	 * @param int $size
+	 *
+	 * @throws \Exception
+	 */
 	public function preparePart(int $size)
 	{
 		$this->testArray = ArrayHelper::getRndArray($size, 10);

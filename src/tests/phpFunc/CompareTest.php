@@ -16,6 +16,9 @@ class CompareTest extends TestAbstract
 	public $name = 'Compare functions';
 	public $volumesTest = [100, 1000, 2000, 3000];
 
+	/**
+	 * @param array $functions
+	 */
 	public function setupFunctions(array $functions = [])
 	{
 		foreach ($functions as $funcName => $function) {
@@ -27,7 +30,7 @@ class CompareTest extends TestAbstract
 		$this->generateStrategy();
 	}
 
-	protected function generateStrategy()
+	protected function generateStrategy(): void
 	{
 		$strategy = [];
 		foreach ($this->functions as $funcName => $function) {

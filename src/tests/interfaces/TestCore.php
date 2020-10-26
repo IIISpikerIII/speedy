@@ -15,7 +15,7 @@ use Twig\Environment;
 
 abstract class TestCore
 {
-	const DUMMY_NAME = 'dummy';
+	public const DUMMY_NAME = 'dummy';
 
 	private $part = 0;
 
@@ -31,10 +31,17 @@ abstract class TestCore
 	protected $strategy = [];
 
 	protected $repeatTest = 5;
+
 	public $volumesTest = [100, 1000, 2000, 3000, 5000];
 	public $name = 'Speedy test';
 	public $view = 'test_result.php';
 
+	/**
+	 * TestCore constructor.
+	 *
+	 * @param DataRepository $dataRepository
+	 * @param Environment $twig
+	 */
 	public function __construct(DataRepository $dataRepository, Environment $twig)
 	{
 		$this->dataRepository = $dataRepository;
@@ -46,7 +53,7 @@ abstract class TestCore
 
 	abstract function run($onlyData = false);
 
-	protected function initDataTable()
+	protected function initDataTable(): void
 	{
 		$this->dataRepository->initTable();
 	}

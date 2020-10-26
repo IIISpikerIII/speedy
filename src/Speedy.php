@@ -10,11 +10,13 @@ namespace speedy;
 
 use DI\DependencyException;
 use DI\NotFoundException;
+use RuntimeException;
 use speedy\config\App;
 use speedy\DTO\TestDataDTO;
 use speedy\lists\TesterList;
 use speedy\lists\TestList;
 use speedy\lists\ViewerList;
+use speedy\testers\TesterInterface;
 use speedy\tests\phpFunc\CompareTest;
 use speedy\tests\interfaces\TestInterface;
 use speedy\viewers\ViewerInterface;
@@ -24,13 +26,64 @@ use Twig\Error\SyntaxError;
 
 class Speedy
 {
-
-	/** @var \DI\Container  */
+	/** @var \DI\Container */
 	private $container;
 
-	public function __construct()
+	/** @var TesterInterface */
+	private $tester;
+
+	/** @var array */
+	private $viewers;
+
+	/** @var int */
+	private $repeatTest = 0;
+
+	/**
+	 * Speedy constructor.
+	 *
+	 * @param string $tester
+	 * @param array $viewers
+	 *
+	 * @throws DependencyException
+	 * @throws NotFoundException
+	 */
+	public function __construct(string $tester = TesterList::TESTER_PHP, array $viewers = [])
 	{
+		$viewersName = count($viewers) > 0 ? $viewers : ViewerList::list();
 		$this->container = App::makeContainer();
+
+		$this->setTester($tester);
+		$this->setViewers($viewersName);
+	}
+
+	/**
+	 * @param string $tester
+	 *
+	 * @throws DependencyException
+	 * @throws NotFoundException
+	 */
+	public function setTester(string $tester): void
+	{
+		$this->tester = $this->buildTester($tester);
+	}
+
+	/**
+	 * @param string[] $viewers
+	 *
+	 * @throws DependencyException
+	 * @throws NotFoundException
+	 */
+	public function setViewers(array $viewers): void
+	{
+		$this->viewers = $this->buildViewers($viewers);
+	}
+
+	/**
+	 * @param int $repeatTest
+	 */
+	public function setRepeatTest(int $repeatTest): void
+	{
+		$this->repeatTest = $repeatTest;
 	}
 
 	/**
@@ -44,19 +97,17 @@ class Speedy
 	 */
 	public function runTestByName(string $testName, array $viewers = [], bool $onlyData = false)
 	{
-		if (in_array($testName, TestList::list(), true)) {
+		$test = $this->buildTest($testName);
+		$test->setTester($this->tester);
 
-			/** @var TestInterface $test */
-			$test = $this->container->get($testName);
-			$test->setTester($this->container->get(TesterList::TESTER_PHP));
-
-			$viewers = count($viewers) > 0 ? $viewers : ViewerList::list();
-			$test->setViewers($this->buildViewers($viewers));
-
-			return $test->run($onlyData);
+		if ($this->repeatTest > 0) {
+			$test->setRepeat($this->repeatTest);
 		}
 
-		return null;
+		$viewers = count($viewers) > 0 ? $this->buildViewers($viewers) : $this->viewers;
+		$test->setViewers($viewers);
+
+		return $test->run($onlyData);
 	}
 
 	/**
@@ -70,10 +121,47 @@ class Speedy
 	{
 		$viewersList = [];
 		foreach ($viewers as $viewerName) {
+
+			if (!in_array($viewerName, ViewerList::list(), true)) {
+				throw new RuntimeException('Viewer ' . $viewerName . ' not found');
+			}
+
 			$viewersList[] = $this->container->get($viewerName);
 		}
 
 		return $viewersList;
+	}
+
+	/**
+	 * @param string $tester
+	 *
+	 * @return TesterInterface
+	 * @throws DependencyException
+	 * @throws NotFoundException
+	 */
+	protected function buildTester(string $tester): TesterInterface
+	{
+		if (!in_array($tester, TesterList::list(), true)) {
+			throw new RuntimeException('Tester not found');
+		}
+
+		return $this->container->get($tester);
+	}
+
+	/**
+	 * @param string $test
+	 *
+	 * @return TestInterface
+	 * @throws DependencyException
+	 * @throws NotFoundException
+	 */
+	protected function buildTest(string $test): TestInterface
+	{
+		if (!in_array($test, TestList::list(), true)) {
+			throw new RuntimeException('Test ' . $test . ' not found');
+		}
+
+		return $this->container->get($test);
 	}
 
 	/**
@@ -84,6 +172,7 @@ class Speedy
 	 * @return mixed
 	 * @throws DependencyException
 	 * @throws NotFoundException
+	 *
 	 * @TODO it is legacy need refacoring
 	 */
 	public static function test($test, $params = [], $onlyData = false)
@@ -112,6 +201,7 @@ class Speedy
 
 		$tester = self::getTester(TesterList::TESTER_PHP);
 		$test->setTester($tester);
+
 		return $test->run($onlyData);
 	}
 
@@ -126,6 +216,7 @@ class Speedy
 	 * @throws LoaderError
 	 * @throws RuntimeError
 	 * @throws SyntaxError
+	 *
 	 * @TODO it is legacy need refacoring
 	 */
 	public static function compare($func = [], $params = [], $onlyData = false)
@@ -165,6 +256,7 @@ class Speedy
 	 * @return mixed
 	 * @throws DependencyException
 	 * @throws NotFoundException
+	 *
 	 * @TODO it is legacy need refacoring
 	 */
 	private static function getTester($testerParams)
